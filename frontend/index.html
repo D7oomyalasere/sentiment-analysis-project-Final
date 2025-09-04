@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analyze - Sentiment Analyzer</title>
+  <link rel="stylesheet" href="/static/css/index.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+<header class="main-header">
+  <div class="container">
+    <h1 class="logo"><i class="fas fa-brain"></i> Sentiment Analyzer</h1>
+    <nav class="nav-bar">
+      <a href="/">Home</a>
+      <a href="/analyze">Analyze</a>
+      <a href="/history-page">History</a>
+      <a href="/about">About</a>
+      <a href="#" id="logoutBtn">Logout</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container front-main">
+  <div class="analysis-section">
+    <h2><i class="fas fa-magic"></i> Analyze Your Text</h2>
+    <p class="subtitle">Enter any text to analyze its sentiment.</p>
+    <textarea id="textInput" placeholder="Type something..." rows="4"></textarea>
+    <button id="analyzeBtn" class="btn"><i class="fas fa-wand-magic-sparkles"></i> Analyze</button>
+
+    <div class="result-display">
+      <p>Sentiment: <span id="sentimentText">-</span></p>
+      <div class="confidence-bar">
+        <div id="confidenceFill" class="confidence-fill"></div>
+      </div>
+      <p>Analyzed Text: <span id="analyzedText">-</span></p>
+    </div>
+  </div>
+
+  <div class="history-section">
+    <h3>Quick History</h3>
+    <ul id="historyList"></ul>
+  </div>
+</main>
+
+<footer class="main-footer">
+  <div class="container">
+    <p>© 2025 Sentiment Analyzer. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- ✅ كود التحقق من تسجيل الدخول -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const token = localStorage.getItem("token");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const analyze = document.querySelector('a[href="/analyze"]');
+    const history = document.querySelector('a[href="/history-page"]');
+
+    if (!token) {
+      // المستخدم مو مسجل دخول → نرجعه للصفحة الرئيسية
+      window.location.href = "/login";
+    } else {
+      // المستخدم مسجل → فعل زر Logout
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          localStorage.removeItem("token");
+          window.location.href = "/login";
+        });
+      }
+    }
+
+    // إظهار الروابط لو فيه توكن
+    if (analyze) analyze.style.display = "inline-block";
+    if (history) history.style.display = "inline-block";
+    if (logoutBtn) logoutBtn.style.display = "inline-block";
+  });
+</script>
+
+<script src="/static/js/index.js"></script>
+</body>
+</html>

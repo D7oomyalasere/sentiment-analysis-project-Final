@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - Sentiment Analyzer</title>
+  <link rel="stylesheet" href="/static/css/about.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<header class="main-header">
+  <div class="container">
+    <h1 class="logo"><i class="fas fa-brain"></i> Sentiment Analyzer</h1>
+    <nav class="nav-bar">
+      <a href="/">Home</a>
+      <a href="/analyze">Analyze</a>
+      <a href="/history-page">History</a>
+      <a href="/about">About</a>
+      <a href="#" id="logoutBtn">Logout</a>
+    </nav>
+  </div>
+</header>
+
+<main class="about-container">
+  <div class="about-card">
+    <h2><i class="fas fa-info-circle"></i> About This Project</h2>
+    <p>
+      <strong>Sentiment Analyzer</strong> is a cutting-edge web application built using state-of-the-art Natural Language Processing (NLP) models to analyze and interpret emotions within written text.
+      Whether you’re analyzing customer feedback, social media comments, or even your personal journaling, our tool provides deep insights into the emotional tone behind the words.
+    </p>
+    <h3>✨ Key Benefits:</h3>
+    <ul>
+      <li>Real-time emotional analysis powered by advanced AI models.</li>
+      <li>A beautiful, intuitive, and responsive user interface.</li>
+      <li>Track your emotional trends over time with history view.</li>
+      <li>Valuable for businesses, students, writers, and mental health applications.</li>
+    </ul>
+    <p>
+      Designed with simplicity and speed in mind, the project combines emotional intelligence with cutting-edge technology, making it the ultimate tool for analyzing emotions in text.
+    </p>
+  </div>
+</main>
+
+<footer class="main-footer">
+  <div class="container">
+    <p>© 2025 Sentiment Analyzer. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- ✅ سكربت التحقق من التوكن وتعديل التنقل -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const token = localStorage.getItem("token");
+
+    const analyze = document.querySelector('a[href="/analyze"]');
+    const history = document.querySelector('a[href="/history-page"]');
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    if (!token) {
+      // إذا مو مسجل → نخفي روابط تسجيل الخروج والتحليل
+      if (analyze) analyze.style.display = "none";
+      if (history) history.style.display = "none";
+      if (logoutBtn) logoutBtn.style.display = "none";
+    } else {
+      // إذا مسجل دخول → فعل زر تسجيل الخروج
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          localStorage.removeItem("token");
+          window.location.href = "/login";
+        });
+      }
+    }
+  });
+</script>
+
+</body>
+</html>

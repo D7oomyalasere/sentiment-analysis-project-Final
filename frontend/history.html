@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>History - Sentiment Analyzer</title>
+  <link rel="stylesheet" href="/static/css/history.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+<header class="main-header">
+  <div class="container">
+    <h1 class="logo"><i class="fas fa-brain"></i> Sentiment Analyzer</h1>
+    <nav class="nav-bar">
+      <a href="/">Home</a>
+      <a href="/analyze">Analyze</a>
+      <a href="/history-page">History</a>
+      <a href="/about">About</a>
+      <a href="#" id="logoutBtn">Logout</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <h2><i class="fas fa-history"></i> My Sentiment History</h2>
+  <p class="history-info">Here you can view all your sentiment analysis results.</p>
+  <div id="historyContainer" class="history-container">
+    <!-- This will be populated with history items from JS -->
+  </div>
+</main>
+
+<footer class="main-footer">
+  <div class="container">
+    <p>© 2025 Sentiment Analyzer. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- ✅ سكربت التحقق من التوكن + التحكم في التنقل -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const token = localStorage.getItem("token");
+
+    const analyze = document.querySelector('a[href="/analyze"]');
+    const history = document.querySelector('a[href="/history-page"]');
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    // المستخدم مو مسجل دخول؟ نرجعه للـ login
+    if (!token) {
+      window.location.href = "/login";
+      return;
+    }
+
+    // فعل زر الخروج
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        localStorage.removeItem("token");
+        window.location.href = "/login";
+      });
+    }
+
+    // عرض روابط التنقل المخصصة
+    if (analyze) analyze.style.display = "inline-block";
+    if (history) history.style.display = "inline-block";
+    if (logoutBtn) logoutBtn.style.display = "inline-block";
+  });
+</script>
+
+<script src="/static/js/history.js"></script>
+</body>
+</html>

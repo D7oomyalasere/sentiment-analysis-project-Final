@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sentiment Analyzer - Home</title>
+  <link rel="stylesheet" href="/static/css/front.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<header class="main-header">
+  <div class="container">
+    <h1 class="logo"><i class="fas fa-brain"></i> Sentiment Analyzer</h1>
+    <nav class="nav-bar">
+      <a href="/">Home</a>
+      <a href="/analyze">Analyze</a>
+      <a href="/history-page">History</a>
+      <a href="/about">About</a>
+      <a href="#" id="logoutBtn">Logout</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container front-main">
+  <div class="welcome-card">
+    <h2 class="front-title">Welcome to Sentiment Analyzer</h2>
+    <p class="front-subtitle">Instantly detect emotions in text using powerful AI technology. Begin your analysis today!</p>
+    <a href="/register" class="btn primary"><i class="fas fa-rocket"></i> Get Started</a>
+  </div>
+</main>
+
+<footer class="main-footer">
+  <div class="container">
+    <p>© 2025 Sentiment Analyzer. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- ✅ كود التحكم في الروابط وتسجيل الدخول -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const token = localStorage.getItem("token");
+
+    const analyze = document.querySelector('a[href="/analyze"]');
+    const history = document.querySelector('a[href="/history-page"]');
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    if (!token) {
+      // لو مو مسجل دخول، نخفي بعض الروابط
+      if (analyze) analyze.style.display = "none";
+      if (history) history.style.display = "none";
+      if (logoutBtn) logoutBtn.style.display = "none";
+    } else {
+      // تفعيل زر تسجيل الخروج
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          localStorage.removeItem("token");
+          window.location.href = "/login";
+        });
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
