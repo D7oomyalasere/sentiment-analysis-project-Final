@@ -126,7 +126,3 @@ The project is still under development and can be improved with:
 * Advanced frontend (React/Vue).
 * Better model (Transformer-based like BERT).
 * Deployment online (Heroku, Render, etc.).
-
----
-
-تحب أضيف بعد في الـ README **صور (Screenshots)** من واجهة المشروع عشان يبان بشكل احترافي أكثر؟
