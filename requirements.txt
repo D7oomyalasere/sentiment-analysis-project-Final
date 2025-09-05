@@ -1,21 +1,19 @@
-
-pip install
- fastapi
-  uvicorn
-   sqlalchemy
-    pymysql
-     passlib[bcrypt]
-      python-jose
-       transformers
-        torch
-         safetensors
-          python-multipart
-           pydantic[email]
-            PyJWT
-             scikit-learn
-              pandas
-               matplotlibfrom 
-                bcrypt
-                 python-dotenv
-                  pytest httpx
-                
+fastapi
+uvicorn
+sqlalchemy
+pymysql
+passlib[bcrypt]
+python-jose
+transformers
+torch
+safetensors
+python-multipart
+pydantic[email]
+PyJWT
+scikit-learn
+pandas
+matplotlib
+bcrypt
+python-dotenv
+pytest
+httpx

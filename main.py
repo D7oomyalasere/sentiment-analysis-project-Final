@@ -1,20 +1,28 @@
+# main.py
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
-from starlette.responses import FileResponse
+from pydantic import BaseModel
+from pathlib import Path
 import os
+
+# ✅ تحميل .env
 from dotenv import load_dotenv
+BASE_DIR = Path(__file__).resolve().parent
+ENV_PATH = BASE_DIR / ".env"
+load_dotenv(dotenv_path=ENV_PATH)
+
+# ✅ استدعاء قاعدة البيانات والراوترات
 from backend.database import Base, engine
 from backend.routers import auth, predict_router, history_router
 
-load_dotenv()
+# ✅ إنشاء التطبيق
+app = FastAPI(title="Sentiment Analysis API", version="1.0.0")
 
-app = FastAPI()
-
-# ✅ إعداد CORS (مهم لواجهات الويب)
+# ✅ إعداد CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -61,17 +69,38 @@ def custom_openapi():
 
 app.openapi = custom_openapi
 
-# ✅ الصفحة الرئيسية
-@app.get("/", response_class=HTMLResponse)
+# ✅ نموذج إدخال نص
+class TextIn(BaseModel):
+    text: str
+
+# ✅ Endpoints أساسية
+@app.get("/")
+def root():
+    return {"message": "Sentiment API is running", "docs": "/docs"}
+
+@app.get("/health")
+def health():
+    return {"status": "ok", "env": os.getenv("APP_ENV")}
+
+@app.post("/predict")
+def predict(payload: TextIn):
+    text = payload.text
+    # TODO: اربط نموذجك الحقيقي هنا
+    return {
+        "input": text,
+        "label": "neutral",
+        "scores": {"neutral": 0.80, "happiness": 0.10, "sadness": 0.10},
+    }
+
+# ✅ صفحات HTML
+@app.get("/home", response_class=HTMLResponse)
 def get_home(request: Request):
     return templates.TemplateResponse("front.html", {"request": request})
 
-# ✅ صفحة التحليل
 @app.get("/analyze", response_class=HTMLResponse)
 def analyze_page(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-# ✅ صفحات إضافية
 @app.get("/login", response_class=HTMLResponse)
 def login_page(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})

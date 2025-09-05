@@ -1,5 +1,4 @@
-﻿.venv/
-__pycache__/
-.ipynb_checkpoints/
-.vscode/*
-!.vscode/settings.json
+
+.env
+
+.env
